@@ -1,10 +1,8 @@
-export default class Slider {
-    constructor(page,btns,teacher) {
-        this.page = document.querySelector(page);
-        this.slides = this.page.children;
-        this.slideIndex = 0;
-        this.btns = document.querySelectorAll(btns);
-        this.teacher = document.querySelector(teacher);
+import Slider from "./slider";
+
+export default class MainSLider extends Slider {
+    constructor(page,next,teacher) {
+        super(page,next,teacher);
     }
     plusSlideIndex(n) {
         this.slideIndex += n;
@@ -37,7 +35,7 @@ export default class Slider {
     }
     render() {
         this.showSlides();
-        this.btns.forEach( btn => {
+        this.next.forEach( btn => {
             btn.addEventListener('click', () => {
                 this.showSlides(1);
             });
