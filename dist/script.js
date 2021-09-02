@@ -2781,6 +2781,22 @@ window.addEventListener('DOMContentLoaded', function () {
     animate: true
   });
   showUpSlider.render();
+  var modulesSlider = new _modules_sliders_slider_mini__WEBPACK_IMPORTED_MODULE_1__["default"]({
+    page: '.modules__content-slider',
+    next: '.modules__info-btns .slick-next',
+    prev: '.modules__info-btns .slick-prev',
+    active: 'card-active',
+    animate: true,
+    autoplay: true
+  });
+  modulesSlider.render();
+  var feedSlider = new _modules_sliders_slider_mini__WEBPACK_IMPORTED_MODULE_1__["default"]({
+    page: '.feed__slider',
+    next: '.feed__slider .slick-next',
+    prev: '.feed__slider .slick-prev',
+    active: 'feed__item-active'
+  });
+  feedSlider.render();
   var videoPlayer = new _modules_videoPlayer__WEBPACK_IMPORTED_MODULE_2__["default"]('.play', '.overlay');
   videoPlayer.render();
 });
@@ -3022,6 +3038,11 @@ function (_Slider) {
         btn.addEventListener('click', function () {
           _this2.page.appendChild(_this2.slides[0]);
 
+          if (_this2.slides[0].tagName === 'BUTTON') {
+            btn.click();
+            btn.click();
+          }
+
           if (_this2.active) {
             _this2.setActive();
           }
@@ -3033,6 +3054,11 @@ function (_Slider) {
 
           _this2.page.insertBefore(active, _this2.slides[0]);
 
+          if (_this2.slides[0].tagName === 'BUTTON') {
+            btn.click();
+            btn.click();
+          }
+
           if (_this2.active) {
             _this2.setActive();
           }
@@ -3040,11 +3066,38 @@ function (_Slider) {
       });
     }
   }, {
+    key: "stopInterval",
+    value: function stopInterval() {
+      var _this3 = this;
+
+      this.slides.forEach(function (slide) {
+        slide.addEventListener('mouseover', function () {
+          clearInterval(_this3.interval);
+        });
+      });
+      this.slides.forEach(function (slide) {
+        slide.addEventListener('mouseout', function () {
+          _this3.interval = setInterval(function () {
+            _this3.next[0].click();
+          }, 4000);
+        });
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this4 = this;
+
       this.page.style.cssText = "\n        display: flex;\n        flex-wrap: wrap;\n        align-items: flex-start;\n        overflow: hidden;\n        ";
       this.bindTriggers();
       this.setActive();
+
+      if (this.autoplay) {
+        this.stopInterval();
+        this.interval = setInterval(function () {
+          _this4.next[0].click();
+        }, 4000);
+      }
     }
   }]);
 

@@ -22,6 +22,10 @@ export default class MiniSlider extends Slider {
         this.next.forEach( btn => {
             btn.addEventListener('click', () => {
                 this.page.appendChild(this.slides[0]);
+                if (this.slides[0].tagName === 'BUTTON') {
+                    btn.click();
+                    btn.click();
+                }
                 if (this.active) {
                     this.setActive();
                 }
@@ -32,9 +36,27 @@ export default class MiniSlider extends Slider {
             btn.addEventListener('click', () => {
                 let active = this.slides[this.slides.length - 1];
                 this.page.insertBefore(active, this.slides[0]);
+                if (this.slides[0].tagName === 'BUTTON') {
+                    btn.click();
+                    btn.click();
+                }
                 if (this.active) {
                     this.setActive();
                 }
+            });
+        });
+    }
+    stopInterval() {
+        this.slides.forEach(slide => {
+            slide.addEventListener('mouseover', () => {
+                clearInterval(this.interval);
+            });
+        });
+        this.slides.forEach(slide => {
+            slide.addEventListener('mouseout', () => {
+                this.interval = setInterval(() => {
+                    this.next[0].click();
+                },4000);
             });
         });
     }
@@ -48,5 +70,12 @@ export default class MiniSlider extends Slider {
 
         this.bindTriggers();
         this.setActive();
+
+        if(this.autoplay) {
+            this.stopInterval();
+            this.interval = setInterval(() => {
+                this.next[0].click();
+            },4000);
+        }
     }
 }
