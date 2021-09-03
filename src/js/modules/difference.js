@@ -30,7 +30,9 @@ export default class Difference {
         });
     }
     render() {
-        this.hideItems();
-        this.bindTriggers();
+        try {
+            this.hideItems();
+            this.bindTriggers();
+        } catch(e) {}
     }
 }
