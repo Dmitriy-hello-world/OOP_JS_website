@@ -3,6 +3,8 @@ import MiniSlider from './modules/sliders/slider-mini';
 import VideoPlayer from './modules/videoPlayer';
 import Difference from './modules/difference';
 import Form from './modules/form';
+import ShowInfo from './modules/showInfo';
+import Download from './modules/download';
 
 window.addEventListener('DOMContentLoaded', () => {
     const mainSlider = new MainSLider({page: '.page', next: '.next', teacher: '.hanson'});
@@ -42,11 +44,15 @@ window.addEventListener('DOMContentLoaded', () => {
     });
     feedSlider.render();
 
-    const videoPlayer = new VideoPlayer('.play', '.overlay');
-    videoPlayer.render();
+    new VideoPlayer('.page .play', '.overlay').render();
+    new VideoPlayer('.module__video-item .play', '.overlay').render();
 
     new Difference('.officerold .officer__card-item','.officerold .plus__content','fadeInLeft').render();
     new Difference('.officernew .officer__card-item','.officernew .plus__content','fadeInRight').render();
 
     new Form('form').render();
+
+    new ShowInfo('.plus__content').render();
+
+    new Download('.download').render();
 });
